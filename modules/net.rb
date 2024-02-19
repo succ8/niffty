@@ -1,4 +1,5 @@
 #!/bin/ruby
+
 def hostname
   check_root
   print("Enter the new hostname: ")
@@ -6,9 +7,26 @@ def hostname
   hostname_file = File.open("/etc/hostname", "w")
   hostname_file.write "#{hostname_in}"
   hostname_file.close()
+
+  hosts_file = File.open("/etc/hosts")
+  hosts_lines = hosts_file.readlines.map(&:chomp)
+
+  new_hosts = []
+  hosts_lines.each_with_index do |element, index|
+    ##TODO fix newline
+    if element.include?("127.0.0.1")
+      printf("127.0.0.1 #{hostname_in} localhost.localdomain\n")
+    elsif element.start_with?("::1")
+      printf("::1 #{hostname_in} localhost.localdomain ipv6-localhost ipv6-loopback\n")
+    end
+    ##TODO rewrite to file
+    hosts_file.close()
 end
 
-def getInput
+  hosts_file.close()
+end
+
+def getAction
   actions = ['Configure hostname']
 
   puts("")
@@ -32,7 +50,7 @@ def check_root
 end
 
 module Niffty_net
-  action = getInput
+  action = getAction
   case action
   when 1
     hostname

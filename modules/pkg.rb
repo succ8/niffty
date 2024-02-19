@@ -1,5 +1,10 @@
 #!/bin/ruby
 
+##  TODO
+# - Multiple packages
+# - Apt support
+# - Search for specific package
+
 module Pacman
     def Pacman.install(package)
       puts("\nInstalling package: #{package}")
@@ -72,32 +77,32 @@ def getInput
 end
 
 module Niffty_pkg
-    pkg_mgr = getOS
-    action = (getInput)
-    case action
-      when 1
-        if Process.uid != 0
-          puts("To use this function, run with sudo")
-        else
-          print("\nWhich package would you like to install? ")
-          pkg_name = gets()
-          pkg_mgr.install(pkg_name)
-        end
-      when 2
-        if Process.uid != 0
-          puts("To use this function, run with sudo")
-        else
-          print("\nWhich package would you like to remove? ")
-          pkg_name = gets()
-          pkg_mgr.remove(pkg_name)
-        end
-      when 3
-        if Process.uid != 0
-          puts("To use this function, run with sudo")
-        else
-          pkg_mgr.update
-        end
-      when 4
-        pkg_mgr.list
-    end
+  pkg_mgr = getOS
+  action = (getInput)
+  case action
+    when 1
+      if Process.uid != 0
+        puts("To use this function, run with sudo")
+      else
+        print("\nWhich package would you like to install? ")
+        pkg_name = gets()
+        pkg_mgr.install(pkg_name)
+      end
+    when 2
+      if Process.uid != 0
+        puts("To use this function, run with sudo")
+      else
+        print("\nWhich package would you like to remove? ")
+        pkg_name = gets()
+        pkg_mgr.remove(pkg_name)
+      end
+    when 3
+      if Process.uid != 0
+        puts("To use this function, run with sudo")
+      else
+        pkg_mgr.update
+      end
+    when 4
+      pkg_mgr.list
+  end
 end
