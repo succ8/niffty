@@ -9,11 +9,15 @@ def choose_action
 
   input = 0
   while (not input.between?(1,actions.length()))
-    print("Select an action: ")
+    print("\nSelect an action: ")
     input = gets.to_i
   end
   return input
 end
 
-todo = choose_action
-
+action = choose_action
+case action
+when 1
+  require_relative 'modules/pkg'
+  include Niffty_pkg
+end
